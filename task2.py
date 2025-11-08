@@ -1,29 +1,38 @@
 import random
 
-def findSmallest(arr):
-    sm = arr[0]
-    sm_i = 0
-    for i in range(1, len(arr)):
-        if arr[i] < sm:
-            sm = arr[i]
-            sm_i = i
-    return sm_i
-
-def selection_sort(arr):
-    new_arr = []
-    for i in range(len(arr)):
-        sm = findSmallest(arr)
-        new_arr.append(arr.pop(sm))
-    return new_arr
-
-def get_numbers_ticket(min, max, quantity=2):
+def get_numbers_ticket(min, max, quantity):
+    if min < 1:
+        return []
+    
     if min >= max:
-        return "Max mast be higher than min"
-    if quantity > (max - min):
-        return "Quantity can't be higher than difference between max and min"
-    rand_list = random.sample(range(min, max), quantity)
-
+        return []
+    
+    if quantity > (max - min + 1):
+        return []
+    
+    if quantity < 1:
+        return []
+    
+    rand_list = random.sample(range(min, max + 1), quantity)
+    
+    rand_list.sort()
+    
     return rand_list
 
-print(selection_sort(get_numbers_ticket(1, 25, 5)))
+
+print("Коректні дані (1, 49, 6):")
+print(get_numbers_ticket(1, 49, 6))
+
+print("\nНекоректні дані (-10, 10, 5) - min < 1:")
+print(get_numbers_ticket(-10, 10, 5))
+
+print("\nНекоректні дані (10, 4, 5) - min >= max:")
+print(get_numbers_ticket(10, 4, 5))
+
+print("\nНекоректні дані (10, 14, 6) - quantity > доступних чисел:")
+print(get_numbers_ticket(10, 14, 6))
+
+print("\nКоректні дані (1, 36, 5):")
+print(get_numbers_ticket(1, 36, 5))
+
         
